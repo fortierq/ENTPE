@@ -1,0 +1,111 @@
+\documentclass[draft]{beamer}
+\mode<presentation> { \usetheme{Madrid} }
+\setbeamersize{text margin left=18pt,text margin right=18pt}
+\setbeamertemplate{footline}{}
+\beamertemplatenavigationsymbolsempty
+
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage{subcaption}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes}
+\tikzstyle{vertex}=[circle,draw,minimum size=20pt,inner sep=0pt]
+\tikzstyle{edge} = [draw,thick,->]
+\usetikzlibrary{graphs, graphdrawing}
+\usegdlibrary{force, layered, circular}
+
+\pagenumbering{gobble}
+
+\begin{document}
+
+\title{Ordonnancement}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Problème}
+    Considérons un ensemble de tâches devant être réalisées.\\
+    Chaque tâche a une durée.\\
+    Il y a des dépendances entre les tâches : par exemple, une tâche $C$ peut avoir besoin que $A$ et $B$ soient terminées avant de commencer.
+    \vspace{2\baselineskip}
+    \pause
+
+    Objectif : minimiser le temps total de réalisation des tâches.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Programmation dynamique}
+    On note $w(t)$ la durée d'une tâche $t$.\\
+    Soit $t$ une tâche et $T$ l'ensemble des dépendances de $t$ (c'est-à-dire tâches qui doivent finir avant que $t$ commence).
+    On veut calculer $d(t)$, la date minimum de fin de $t$.
+    \pause
+    \vspace{\baselineskip}
+
+    On peut montrer que :
+    $$\boxed{d(t) = w(t) + \max_{t' \in T} d(t')}$$
+    \pause
+    \vspace{\baselineskip}
+
+    La valeur maximum de $d(t)$, pour une tâche quelconque $t$, donne le temps de réalisation total minimum.\\
+    Le chemin correspondant est dit \textbf{critique} (toutes les tâches le long de ce chemin doivent être réalisées dès que possible).
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Méthode MPM}
+    La méthode MPM consiste à considérer un graphe orienté tel que :
+    \begin{enumerate}
+        \item Les sommets sont les tâches.
+        \item Chaque arête est une dépendance, avec un poids égal à la durée de la tâche de départ.
+    \end{enumerate}
+    \pause
+
+    De plus on rajoute deux sommets $s$ et $t$ (pour le début et la fin) :
+    \begin{enumerate}
+        \item $s$ est relié à chaque tâche sans prédécesseur, avec un poids 0.
+        \item Chaque tâche $a$ sans successeur est relié à $t$, avec un poids égal à la durée de $a$.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Méthode MPM}
+    \begin{table}[]
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Tâche & Préd & Durée \\ \hline
+            A     &      & 5     \\ \hline
+            B     &      & 3     \\ \hline
+            C     & A    & 2     \\ \hline
+            D     & B, C & 4     \\ \hline
+            E     & A, C & 3     \\ \hline
+        \end{tabular}
+    \end{table}
+    \begin{figure}
+        \begin{tikzpicture}[auto,swap]
+            \foreach \pos/\name in {{(-2, 1)/s}, {(0,0)/A}, {(0,2)/B}, {(2,1)/C}, {(4,2)/D}, {(4,0)/E}, {(6,1)/t}}
+            \node[vertex] (\name) at \pos {$\name$};
+
+            \foreach \source/ \dest /\weight in
+                {s/B/0, s/A/0, A/C/5, B/D/3, C/D/2, C/E/2, A/E/5, E/t/4, D/t/3}
+            \path[edge] (\source) -- node[weight] {$\weight$} (\dest);
+        \end{tikzpicture}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Méthode PERT}
+    La méthode PERT consiste à considérer un graphe orienté tel que :
+    \begin{enumerate}
+        \item Les arêtes sont les tâches.
+        \item Les sommets correspondent aux débuts/fins de tâches.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Méthode PERT : exemple}
+    Voir vidéo : https://www.youtube.com/watch?v=xAidvykSNXo
+\end{frame}
+
+\end{document}

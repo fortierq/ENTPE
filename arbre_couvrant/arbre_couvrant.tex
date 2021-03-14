@@ -199,24 +199,34 @@
     \end{figure}
 \end{frame}
 
-% \begin{frame}
-%     \frametitle{Algorithme de Prim}
-%     \begin{figure}
-%         \begin{tikzpicture}[scale=1.8, auto,swap]
-%             \foreach \pos/\name in {{(0,2)/a}, {(2,1)/b}, {(4,1)/c},
-%                     {(0,0)/d}, {(3,0)/e}, {(2,-1)/f}, {(4,-1)/g}}
-%             \node[vertex] (\name) at \pos {$\name$};
+\begin{frame}
+    \frametitle{Algorithme de Prim}
+    Commencer avec un arbre T contenant un seul sommet.
+    \vspace{2\baselineskip}
 
-%             \foreach \source/ \dest /\weight in 
-%             {b/a/7, c/b/8, d/a/5, d/b/9, e/b/7, e/c/5,e/d/15, f/d/6,f/e/8, g/e/9,g/f/11}
-%             \path[edge] (\source) -- node[weight] {$\weight$} (\dest);
-%             \pause
-%             \foreach \vertex / \fr in {d/1,a/2,f/3,b/4,e/5,c/6,g/7}
-%             \path<\fr-> node[selected vertex] at (\vertex) {$\vertex$};
-%             \foreach \source / \dest in {d/a,d/f,a/b,b/e,e/c,e/g}
-%             \path<+->[selected edge] (\source) -- (\dest);
-%         \end{tikzpicture}
-%     \end{figure}
-% \end{frame}
+    Tant que T ne contient pas tous les sommets:\\
+    \hspace{.5cm} Ajouter l'arête sortante de T de poids minimum
+\end{frame}
+
+\begin{frame}
+    \frametitle{Algorithme de Prim}
+    \begin{figure}
+        \begin{tikzpicture}[scale=1.8, auto,swap]
+            \foreach \pos/\name in {{(0,2)/a}, {(2,1)/b}, {(4,1)/c},
+                    {(0,0)/d}, {(3,0)/e}, {(2,-1)/f}, {(4,-1)/g}}
+            \node[vertex] (\name) at \pos {$\name$};
+
+            \foreach \source/ \dest /\weight in
+                {b/a/7, c/b/8, d/a/5, d/b/9, e/b/7, e/c/5,e/d/15, f/d/6,f/e/8, g/e/9,g/f/11}
+            \path[edge] (\source) -- node[weight] {$\weight$} (\dest);
+            \node[selected vertex] at (a) {$a$};
+            \pause
+            \foreach \vertex / \fr in {d/1,a/2,f/3,b/4,e/5,c/6,g/7}
+            \path<\fr-> node[selected vertex] at (\vertex) {$\vertex$};
+            \foreach \source / \dest in {d/a,d/f,a/b,b/e,e/c,e/g}
+            \path<+->[selected edge] (\source) -- (\dest);
+        \end{tikzpicture}
+    \end{figure}
+\end{frame}
 
 \end{document}

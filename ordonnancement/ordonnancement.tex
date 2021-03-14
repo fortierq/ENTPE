@@ -63,10 +63,10 @@
     \pause
     \vspace{\baselineskip}
 
-    De plus on rajoute deux sommets $s$ et $t$ (pour le début et la fin) :
+    De plus on rajoute deux sommets $s$ et $p$ (pour le début et la fin) :
     \begin{enumerate}
         \item $s$ est relié à chaque tâche sans prédécesseur, avec un poids 0.
-        \item Chaque tâche $a$ sans successeur est relié à $t$, avec un poids égal à la durée de $a$.
+        \item Chaque tâche $t$ sans successeur est relié à $p$, avec un poids égal à la durée de $t$.
     \end{enumerate}
 \end{frame}
 
@@ -87,11 +87,11 @@
 
     \begin{figure}
         \begin{tikzpicture}[auto,swap]
-            \foreach \pos/\name in {{(-2, 1)/s}, {(0,0)/A}, {(0,2)/B}, {(2,1)/C}, {(4,2)/D}, {(4,0)/E}, {(6,1)/t}}
+            \foreach \pos/\name in {{(-2, 1)/s}, {(0,0)/A}, {(0,2)/B}, {(2,1)/C}, {(4,2)/D}, {(4,0)/E}, {(6,1)/p}}
             \node[vertex] (\name) at \pos {$\name$};
 
             \foreach \source / \dest /\weight in
-                {s/B/0, s/A/0, A/C/5, B/D/3, C/D/2, C/E/2, A/E/5, E/t/4, D/t/3}
+                {s/B/0, s/A/0, A/C/5, B/D/3, C/D/2, C/E/2, A/E/5, E/p/4, D/p/3}
             \path[edge] (\source) -- node {$\weight$} (\dest);
 
             \foreach \pos/\v/\k in {{(0,-.5)/0/1}, {(0,2.5)/0/2}, {(1.4,1)/5/3}, {(4,2.5)/7/4}, {(4,-.5)/7/5}, {(6.7,1)/11/6}}
@@ -100,6 +100,21 @@
     \end{figure}
 
     \color{red}{Dates au plus tôt pour démarrer chaque tâche}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Date au plus tard}
+    On a donc trouvé la \textbf{date au plus tôt} pour commencer chaque tâche (la date la plus tôt pour $t$ étant la durée minimale pour réaliser toutes les tâches).
+    \vspace{\baselineskip}
+
+    On peut aussi calculer la \textbf{date au plus tard} $f(t)$ d'une tâche $t$ : la date maximum à laquelle on peut démarrer $t$ sans ralentir la durée totale optimale.
+    \pause
+
+    Soit $T$ l'ensemble des successeurs de $t$. On peut montrer que :
+    $$\boxed{f(t) = \min_{t' \in T} f(t') - w(t)}$$
+    \pause
+
+    Ainsi, on peut trouver les dates au plus tard de chaque tâche en utilisant le graphe obtenu précédemment, à l'envers (en partant de $p$).
 \end{frame}
 
 \begin{frame}[fragile]

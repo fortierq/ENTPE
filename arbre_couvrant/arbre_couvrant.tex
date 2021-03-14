@@ -181,6 +181,24 @@
     \hspace{1cm} Ajouter $a$ à T
 \end{frame}
 
+\begin{frame}
+    \frametitle{Algorithme de Kruskal}
+    \begin{figure}
+        \begin{tikzpicture}[scale=1.8, auto,swap]
+            \foreach \pos/\name in {{(0,2)/a}, {(2,1)/b}, {(4,1)/c},
+                    {(0,0)/d}, {(3,0)/e}, {(2,-1)/f}, {(4,-1)/g}}
+            \node[vertex] (\name) at \pos {$\name$};
+
+            \foreach \source/ \dest /\weight in
+                {b/a/7, c/b/8, d/a/5, d/b/9, e/b/7, e/c/5,e/d/15, f/d/6,f/e/8, g/e/9,g/f/11}
+            \path[edge] (\source) -- node[weight] {$\weight$} (\dest);
+            \pause
+            \foreach \source / \dest in {d/a,e/c,d/f,b/e,b/a,e/g}
+            \path<+->[selected edge] (\source) -- (\dest);
+        \end{tikzpicture}
+    \end{figure}
+\end{frame}
+
 % \begin{frame}
 %     \frametitle{Algorithme de Prim}
 %     \begin{figure}
@@ -189,10 +207,8 @@
 %                     {(0,0)/d}, {(3,0)/e}, {(2,-1)/f}, {(4,-1)/g}}
 %             \node[vertex] (\name) at \pos {$\name$};
 
-%             \foreach \source/ \dest /\weight in {b/a/7, c/b/8,d/a/5,d/b/9,
-%                     e/b/7, e/c/5,e/d/15,
-%                     f/d/6,f/e/8,
-%                     g/e/9,g/f/11}
+%             \foreach \source/ \dest /\weight in 
+%             {b/a/7, c/b/8, d/a/5, d/b/9, e/b/7, e/c/5,e/d/15, f/d/6,f/e/8, g/e/9,g/f/11}
 %             \path[edge] (\source) -- node[weight] {$\weight$} (\dest);
 %             \pause
 %             \foreach \vertex / \fr in {d/1,a/2,f/3,b/4,e/5,c/6,g/7}

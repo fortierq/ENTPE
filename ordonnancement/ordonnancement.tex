@@ -57,10 +57,11 @@
     \frametitle{Méthode MPM}
     La méthode MPM consiste à considérer un graphe orienté tel que :
     \begin{enumerate}
-        \item Les sommets sont les tâches.
+        \item Les sommets correspond au début d'une tâche.
         \item Chaque arête est une dépendance, avec un poids égal à la durée de la tâche de départ.
     \end{enumerate}
     \pause
+    \vspace{\baselineskip}
 
     De plus on rajoute deux sommets $s$ et $t$ (pour le début et la fin) :
     \begin{enumerate}
@@ -82,16 +83,23 @@
             E     & A, C & 3     \\ \hline
         \end{tabular}
     \end{table}
+    \pause
+
     \begin{figure}
         \begin{tikzpicture}[auto,swap]
             \foreach \pos/\name in {{(-2, 1)/s}, {(0,0)/A}, {(0,2)/B}, {(2,1)/C}, {(4,2)/D}, {(4,0)/E}, {(6,1)/t}}
             \node[vertex] (\name) at \pos {$\name$};
 
-            \foreach \source/ \dest /\weight in
+            \foreach \source / \dest /\weight in
                 {s/B/0, s/A/0, A/C/5, B/D/3, C/D/2, C/E/2, A/E/5, E/t/4, D/t/3}
-            \path[edge] (\source) -- node[weight] {$\weight$} (\dest);
+            \path[edge] (\source) -- node {$\weight$} (\dest);
+
+            \foreach \pos/\v/\k in {{(0,-.5)/0/1}, {(0,2.5)/0/2}, {(1.4,1)/5/3}, {(4,2.5)/7/4}, {(4,-.5)/7/5}, {(6.7,1)/11/6}}
+            \onslide<\k-> {\node[color=red] (\v) at \pos {$\v$};};
         \end{tikzpicture}
     \end{figure}
+
+    \color{red}{Dates au plus tôt pour démarrer chaque tâche}
 \end{frame}
 
 \begin{frame}[fragile]
